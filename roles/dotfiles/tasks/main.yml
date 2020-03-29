@@ -1,0 +1,190 @@
+---
+
+- name: Install dotfile dependencies using sudo
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - curl
+    - fontconfig
+    - git
+    - wget
+  become: yes
+  become_method: sudo
+
+- name: Clone Dotfiles repo
+  git:
+    repo: 'https://github.com/ps1337/Dotfiles.git'
+    dest: ~/.dotfiles
+    update: yes
+    recursive: yes
+
+- name: Clone machine specific secrets repo
+  git:
+    repo: "{{ secrets_repo_url }}"
+    dest: "~/.dotfiles/{{ secrets_config }}"
+    update: yes
+    recursive: yes
+  when: secrets_repo_url is defined
+
+- name: Clone shared secrets repo
+  git:
+    repo: "{{ shared_repo_url }}"
+    dest: "~/.dotfiles/shared-secrets"
+    update: yes
+    recursive: yes
+  when: shared_repo_url is defined
+
+- name: Update submodules
+  command: git submodule update --init --recursive
+  args:
+    chdir: ~/.dotfiles
+
+- import_tasks: symlinks.yml
+  become: no
+  vars:
+    srcBase: "{{ lookup('env', 'HOME') }}"
+    dstBase: "{{ lookup('env', 'HOME') }}"
+
+- import_tasks: symlinks.yml
+  become: yes
+  become_user: root
+  become_method: sudo
+  vars:
+    srcBase: "{{ lookup('env', 'HOME') }}"
+    dstBase: "/root"
+
+- name: Link root based files
+  file:
+    src: "~/.dotfiles/{{ item.src }}"
+    dest: "{{ item.dst }}"
+    state: link
+    force: yes
+  with_items:
+    - { src: "fonts-local.conf", dst: "/etc/fonts/local.conf" }
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install antibody
+  shell: |
+    source /etc/profile && \
+    trizen -S --noconfirm --needed \
+      antibody \
+  become: no
+  when: ansible_distribution == "Archlinux"
+
+- name: Install antibody
+  shell: |
+    curl -sSL \
+        $(curl -sSL https://api.github.com/repos/getantibody/antibody/releases/latest | \
+        grep "browser_download_url" | \
+        grep "amd64.deb" | \
+        cut -d ":" -f 2,3 | \
+        tr --delete \" | \
+        tr --delete " ") \
+     -o /tmp/antibody.deb && \
+     dpkg -i /tmp/antibody.deb && \
+     rm /tmp/antibody.deb
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+- name: Update shell plugins with antibody
+  shell: |
+    antibody update
+  become: no
+
+- name: Delete SSH config symlink for root and replace it with a regular file (Remove)
+  file:
+    path: "/root/.ssh/config"
+    state: absent
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Make sure the SSH config for the user exists
+  copy:
+    content: ""
+    dest: "{{ lookup('env', 'HOME') }}/.ssh/config"
+    force: no
+
+- name: Delete SSH config symlink for root and replace it with a regular file (Copy)
+  copy:
+    remote_src: True
+    src: "{{ lookup('env', 'HOME') }}/.ssh/config"
+    dest: /root/.ssh/.config
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Install fzf
+  shell: |
+    echo "yyn" | ~/.dotfiles/fzf/install
+
+- name: Check if Font-Awesome font is installed
+  stat:
+    path: /usr/share/fonts/opentype/FontAwesome5FreeSolid-900.otf
+  register: stat_result_awesome
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Create Font-Awesome folder
+  file:
+    state: directory
+    path: /usr/share/fonts/opentype
+    recurse: yes
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Copy Font-Awesome font
+  copy:
+    src: "~/.dotfiles/fonts/Font-Awesome/otfs/{{ item.src }}"
+    dest: "/usr/share/fonts/opentype/{{ item.dst }}"
+  with_items:
+    - { src: "Font Awesome 5 Brands-Regular-400.otf", dst: "FontAwesome5BrandsRegular-400.otf" }
+    - { src: "Font Awesome 5 Free-Regular-400.otf", dst: "FontAwesome5FreeRegular-400.otf" }
+    - { src: "Font Awesome 5 Free-Solid-900.otf", dst: "FontAwesome5FreeSolid-900.otf" }
+  when: stat_result_awesome.stat.exists == False
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Create Dina folder
+  file:
+    state: directory
+    path: /usr/share/fonts/misc/Dina
+    recurse: yes
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Copy Dina font
+  copy:
+    src: "~/.dotfiles/fonts/Dina"
+    dest: /usr/share/fonts/misc
+  become: yes
+  become_user: root
+  become_method: sudo
+
+- name: Check if bitmap fonts need to be enabled manually
+  stat:
+    path: /etc/fonts/conf.d/70-no-bitmaps.conf
+  register: bitmap_result
+
+- name: Enable bitmap fonts
+  file:
+    path: /etc/fonts/conf.d/70-no-bitmaps.conf
+    state: absent
+  when: bitmap_result.stat.exists == True
+  become: yes
+  become_user: root
+  become_method: sudo
+
+
+- name: Recreate fonts cache
+  shell: |
+    fc-cache -fv
+  become: yes
+  become_user: root
+  become_method: sudo

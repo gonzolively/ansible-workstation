@@ -1,0 +1,13 @@
+---
+
+- name: Install vscode via trizen
+  shell: |
+    trizen -S --noconfirm --needed \
+        visual-studio-code-bin
+  become: no
+
+- name: Install vscode dependencies trizen
+  shell: |
+    trizen -S --noconfirm --needed \
+        ncurses5-compat-libs
+  become: no

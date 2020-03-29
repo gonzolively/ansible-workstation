@@ -1,0 +1,60 @@
+---
+
+- name: Install general dependencies via package manager
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - git
+    - ranger
+    - zsh
+    - wget
+    - curl
+    - tmux
+    - cmake
+    - zsh
+
+- include_tasks: ubuntu-debian-minimal.yml
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+- include_tasks: arch-minimal.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Clone Dotfiles repo
+  git:
+    repo: 'https://github.com/ps1337/Dotfiles.git'
+    dest: ~/.dotfiles
+    update: yes
+    recursive: yes
+
+- name: Clone shared repo
+  git:
+    repo: "{{ shared_repo_url }}"
+    dest: "~/.dotfiles/shared-secrets"
+    update: yes
+    recursive: yes
+  when: shared_repo_url is defined
+
+
+- name: Update submodules
+  command: git submodule update --init --recursive
+  args:
+    chdir: ~/.dotfiles
+
+- import_tasks: symlinks-minimal.yml
+  vars:
+    srcBase: "/root"
+    dstBase: "/root"
+
+- name: Install fzf
+  shell: |
+    echo "yyn" | ~/.dotfiles/fzf/install
+
+- name: Update shell plugins with antibody
+  shell: |
+    antibody bundle < "$HOME/.antibody_bundle" > "$HOME/.zsh_plugins.sh"
+  become: no
+
+- name: Call vim role
+  include_role:
+    name: vim

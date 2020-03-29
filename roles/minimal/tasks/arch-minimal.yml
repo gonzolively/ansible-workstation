@@ -1,0 +1,31 @@
+---
+
+- name: Installing python (Arch)
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python2
+    - python2-pip
+    - python
+    - python-pip
+
+- name: Installing Arch packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - gcc
+    - clang
+
+- name: Installing trizen (Arch)
+  shell: |
+    command -v trizen || pacman -S --noconfirm trizen
+  become: no
+
+- name: Install antibody
+  shell: |
+    source /etc/profile && \
+    trizen -S --noconfirm --needed \
+      antibody \
+  become: no
