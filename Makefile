@@ -15,22 +15,12 @@ help: ## This help
 deploy: ## Run all roles
 	ansible-playbook --ask-become-pass -i "localhost," -c local deploy.yml
 
-deploy-server: ## Run the server role and all included roles
-	ansible-playbook --ask-become-pass -i "localhost," -c local deployServer.yml
-
-update-dotfiles: ## Update the dotfiles
-	ansible-playbook --ask-become-pass -i "localhost," -c local updateDotfiles.yml
-
 ansible: ## Install ansible
 	if which pacman; then \
 		sudo pacman --noconfirm -S ansible; \
-	elif [[ $$(cat /etc/os-release  | grep debian | wc -l) -gt 0 ]]; then \
-		sudo apt-get update && \
-		sudo apt-get -y install gnupg && \
-		sudo echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" >> /etc/apt/sources.list && \
-		sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367 && \
-		sudo apt-get update && \
-		sudo apt-get -y install ansible; \
+	elif [[ $$(cat /etc/os-release | grep fedora | wc -l) -gt 0 ]]; then \
+		sudo dnf update && \
+		sudo dnf install ansible -y; \
 	elif which apt-add-repository; then \
 		sudo apt-get update && \
 		sudo apt-get -y install gnupg && \

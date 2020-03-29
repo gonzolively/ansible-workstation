@@ -11,34 +11,34 @@ script:
       if [ "$BUILD_CFG" == "ubuntu" ]; then
           docker run \
               --rm \
-              -v $PWD:/tmp/Dotfile-tools \
+              -v $PWD:/tmp/ansible-workstation \
               ubuntu:latest \
               bash -c "apt update && \
                        apt -y install \
                            sudo \
                            make && \
-                       cd /tmp/Dotfile-tools && \
+                       cd /tmp/ansible-workstation && \
                        make ansible && \
                        make test"
 
       elif [ "$BUILD_CFG" == "fedora" ]; then
           docker run \
               --rm \
-              -v $PWD:/tmp/Dotfile-tools \
+              -v $PWD:/tmp/ansible-workstation \
               fedora:latest \
               bash -c "dnf update && \
                        dnf install \
                            sudo \
                            make \
                            gnupg -y && \
-                       cd /tmp/Dotfile-tools && \
+                       cd /tmp/ansible-workstation && \
                        make ansible && \
                        make test"
 
       elif [ "$BUILD_CFG" == "arch" ]; then
           docker run \
               --rm \
-              -v $PWD:/tmp/Dotfile-tools \
+              -v $PWD:/tmp/ansible-workstation \
               alekzonder/archlinux-yaourt:latest \
               bash -c "pacman --noconfirm -Syu \
                            sudo \
@@ -46,8 +46,8 @@ script:
                            gawk \
                            python \
                            make && \
-                       cd /tmp/Dotfile-tools && \
-                       sudo -u yaourt bash -c 'cd /tmp/Dotfile-tools && \
+                       cd /tmp/ansible-workstation && \
+                       sudo -u yaourt bash -c 'cd /tmp/ansible-workstation && \
                                                make ansible && make test'"
       fi
 

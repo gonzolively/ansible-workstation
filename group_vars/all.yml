@@ -1,0 +1,11 @@
+user:
+    name: knox
+    uid: 1000
+    group: knox
+    shell: /usr/bin/zsh
+    email:  knox.lively@gmail.com
+    log:
+        dir: log
+        rotate: 8
+
+hostname: animal
