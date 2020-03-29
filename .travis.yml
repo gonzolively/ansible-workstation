@@ -39,7 +39,7 @@ script:
           docker run \
               --rm \
               -v $PWD:/tmp/Dotfile-tools \
-              archlinux/base:latest \
+              alekzonder/archlinux-yaourt:latest \
               bash -c "pacman --noconfirm -Syu \
                            sudo \
                            which \
