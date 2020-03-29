@@ -63,9 +63,3 @@
     - { src: "xinitrc", dst: ".xinitrc" }
     - { src: "xresources", dst: ".Xresources" }
     - { src: "zshrc", dst: ".zshrc" }
-
-- include_tasks: "{{ srcBase }}/.dotfiles/{{ secrets_config }}/tasks.yml"
-  when: secrets_config is defined
-
-- include_tasks: "{{ srcBase }}/.dotfiles/shared-secrets/tasks.yml"
-  when: shared_repo_url is defined

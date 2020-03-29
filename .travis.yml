@@ -1,0 +1,58 @@
+services:
+  - docker
+
+env:
+  - BUILD_CFG=arch
+  - BUILD_CFG=ubuntu
+  - BUILD_CFG=fedora
+
+script:
+  - |
+      if [ "$BUILD_CFG" == "ubuntu" ]; then
+          docker run \
+              --rm \
+              -v $PWD:/tmp/Dotfile-tools \
+              ubuntu:latest \
+              bash -c "apt update && \
+                       apt -y install \
+                           sudo \
+                           make && \
+                       cd /tmp/Dotfile-tools && \
+                       make ansible && \
+                       make test"
+
+      elif [ "$BUILD_CFG" == "fedora" ]; then
+          docker run \
+              --rm \
+              -v $PWD:/tmp/Dotfile-tools \
+              fedora:latest \
+              bash -c "dnf update && \
+                       dnf -y install \
+                           sudo \
+                           make \
+                           gnupg && \
+                       cd /tmp/Dotfile-tools && \
+                       make ansible && \
+                       make test"
+
+      elif [ "$BUILD_CFG" == "arch" ]; then
+          docker run \
+              --rm \
+              -v $PWD:/tmp/Dotfile-tools \
+              alekzonder/archlinux-yaourt:latest \
+              bash -c "pacman --noconfirm -Syu \
+                           sudo \
+                           which \
+                           gawk \
+                           python \
+                           make && \
+                       cd /tmp/Dotfile-tools && \
+                       sudo -u yaourt bash -c 'cd /tmp/Dotfile-tools && \
+                                               make ansible && make test'"
+      fi
+
+after_success:
+  - // e.g. send notification using Telegram
+
+after_failure:
+  - // e.g. send notification using Telegram
