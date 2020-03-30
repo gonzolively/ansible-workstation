@@ -25,20 +25,16 @@ script:
                        sudo apt-get install -y ansible && \
                        make test"
 
-
       elif [ "$BUILD_CFG" == "fedora" ]; then
           docker run \
               --rm \
               -v $PWD:/tmp/ansible-workstation \
               fedora:latest \
-              bash -c "dnf update && \
-                       dnf install \
-                           sudo \
-                           make \
-                           gnupg -y && \
+              bash -c "dnf upgrade && \
+                       dnf install -y sudo make gnupg && \
                        cd /tmp/ansible-workstation && \
-                       sudo dnf update && \
-                       sudo dnf install ansible -y && \
+                       sudo dnf upgrade && \
+                       sudo dnf install -y ansible && \
                        make test"
 
       elif [ "$BUILD_CFG" == "arch" ]; then
