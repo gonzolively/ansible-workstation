@@ -2,9 +2,9 @@ services:
   - docker
 
 env:
-  #- BUILD_CFG=arch
+  - BUILD_CFG=arch
   - BUILD_CFG=ubuntu
-  #- BUILD_CFG=fedora
+  - BUILD_CFG=fedora
 
 script:
   - |
@@ -37,7 +37,8 @@ script:
                            make \
                            gnupg -y && \
                        cd /tmp/ansible-workstation && \
-                       make ansible && \
+                       sudo dnf update && \
+                       sudo dnf install ansible -y && \
                        make test"
 
       elif [ "$BUILD_CFG" == "arch" ]; then
@@ -53,7 +54,8 @@ script:
                            make && \
                        cd /tmp/ansible-workstation && \
                        sudo -u yaourt bash -c 'cd /tmp/ansible-workstation && \
-                                               make ansible && make test'"
+                       sudo pacman --noconfirm -S ansible && \
+                       make test"
       fi
 
 after_success:
