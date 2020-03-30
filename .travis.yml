@@ -49,7 +49,7 @@ script:
       fi
 
 after_success:
-  - curl -iXg GET "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CHATID&text=ansible-workstation [BUILD_CFG=$BUILD_CFG] OK" 2>&1 >/dev/null
+  - curl -iX GET "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CHATID&text=ansible-workstation \[BUILD_CFG=$BUILD_CFG\] OK" 2>&1 >/dev/null
 
 after_failure:
-  - curl -iXg GET "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CHATID&text=ansible-workstation [BUILD_CFG=$BUILD_CFG] failed!" 2>&1 >/dev/null
+  - curl -iX GET "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CHATID&text=ansible-workstation \[BUILD_CFG=$BUILD_CFG\] failed!" 2>&1 >/dev/null
