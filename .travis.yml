@@ -40,12 +40,8 @@ script:
               --rm \
               -v $PWD:/tmp/ansible-workstation \
               alekzonder/archlinux-yaourt:latest \
-              bash -c "sudo rm -R /etc/pacman.d/gnupg/ && \
-                       sudo rm -R /root/.gnupg/ && \
-                       sudo gpg --refresh-keys && \
-                       sudo pacman-key --init && pacman-key --populate archlinux && \
-                       sudo pacman -Scc && \
-                       sudo pacman --noconfirm -Syu which gawk python make && \
+              bash -c "sudo pacman -Sy archlinux-keyring && \
+                       sudo pacman --noconfirm -Syyu which gawk python make && \
                        cd /tmp/ansible-workstation && \
                        sudo -u yaourt bash -c 'cd /tmp/ansible-workstation && \
                        sudo pacman --noconfirm -S ansible && \
