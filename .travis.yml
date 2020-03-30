@@ -42,7 +42,7 @@ script:
               alekzonder/archlinux-yaourt:latest \
               bash -c "echo "y" | sudo pacman -Scc && \
                        sudo pacman-key --populate archlinux
-                       sudo pacman --noconfirm -Syu which gawk python make && \
+                       echo "y" | sudo pacman --noconfirm -Syu which gawk python make && \
                        cd /tmp/ansible-workstation && \
                        sudo -u yaourt bash -c 'cd /tmp/ansible-workstation && \
                        sudo pacman --noconfirm -S ansible && \
