@@ -22,6 +22,7 @@ ansible: ## Install ansible
 		sudo dnf update && \
 		sudo dnf install ansible -y; \
 	elif which apt-add-repository; then \
+		sudo apt-get install -y --no-install-recommends apt-utils
 		echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
 		sudo apt-get update && \
 		sudo apt-get -y install gnupg && \
