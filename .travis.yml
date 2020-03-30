@@ -40,7 +40,7 @@ script:
               --rm \
               -v $PWD:/tmp/ansible-workstation \
               alekzonder/archlinux-yaourt:latest \
-              bash -c "sudo pacman -Scc \
+              bash -c "sudo pacman -Scc && \
                        pacman --noconfirm -Syu which \
                        gawk python make && \
                        cd /tmp/ansible-workstation && \
