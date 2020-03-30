@@ -49,7 +49,7 @@ script:
       fi
 
 after_success:
-  - // e.g. send notification using Telegram
+    - curl -iX GET "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CHATID&text=Dotfile-tools $BUILD_CFG OK" 2>&1 >/dev/null
 
 after_failure:
-  - // e.g. send notification using Telegram
+    - curl -iX GET "https://api.telegram.org/bot$TOKEN/sendMessage?chat_id=$CHATID&text=Dotfile-tools $BUILD_CFG failed" 2>&1 >/dev/null
