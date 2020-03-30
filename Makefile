@@ -18,14 +18,6 @@ ansible: ## Install ansible
 	elif [[ $$(cat /etc/os-release | grep fedora | wc -l) -gt 0 ]]; then \
 		sudo dnf update && \
 		sudo dnf install ansible -y; \
-	elif which apt-add-repository; then \
-		sudo apt-get update && \
-		sudo apt-get -y install gnupg && \
-		sudo apt-add-repository -y ppa:ansible/ansible && \
-		sudo apt-get update && \
-		sudo apt-get install -y ansible; \
-	fi
-
 
 test: ## Perform travis tests
 	ansible-playbook -i "localhost," -c local .deployTest.yml
