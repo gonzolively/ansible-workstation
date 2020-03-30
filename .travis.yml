@@ -40,12 +40,9 @@ script:
               --rm \
               -v $PWD:/tmp/ansible-workstation \
               alekzonder/archlinux-yaourt:latest \
-              bash -c "pacman --noconfirm -Syu \
-                           sudo \
-                           which \
-                           gawk \
-                           python \
-                           make && \
+              bash -c "sudo pacman -Scc \
+                       pacman --noconfirm -Syu which \
+                       gawk python make && \
                        cd /tmp/ansible-workstation && \
                        sudo -u yaourt bash -c 'cd /tmp/ansible-workstation && \
                        sudo pacman --noconfirm -S ansible && \
