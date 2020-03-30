@@ -30,7 +30,7 @@ script:
               --rm \
               -v $PWD:/tmp/ansible-workstation \
               fedora:latest \
-              bash -c "dnf upgrade && \
+              bash -c "echo "y" | dnf upgrade && \
                        sudo dnf install -y make gnupg ansible && \
                        cd /tmp/ansible-workstation && \
                        make test"
