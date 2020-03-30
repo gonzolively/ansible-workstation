@@ -30,9 +30,8 @@ script:
               --rm \
               -v $PWD:/tmp/ansible-workstation \
               fedora:latest \
-              bash -c "yum update && \
-                       yum upgrade && \
-                       yum install -y sudo make gnupg ansible && \
+              bash -c "dnf upgrade && \
+                       sudo dnf install -y make gnupg ansible && \
                        cd /tmp/ansible-workstation && \
                        make test"
 
