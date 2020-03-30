@@ -2,9 +2,9 @@ services:
   - docker
 
 env:
-  #- BUILD_CFG=arch
+  - BUILD_CFG=arch
   - BUILD_CFG=ubuntu
-  #- BUILD_CFG=fedora
+  - BUILD_CFG=fedora
 
 script:
   - |
@@ -41,8 +41,8 @@ script:
               -v $PWD:/tmp/ansible-workstation \
               alekzonder/archlinux-yaourt:latest \
               bash -c "echo "y" | sudo pacman -Scc && \
-                       pacman --noconfirm -Syu which \
-                       gawk python make && \
+                       sudo pacman-key --populate archlinux
+                       sudo pacman --noconfirm -Syu which gawk python make && \
                        cd /tmp/ansible-workstation && \
                        sudo -u yaourt bash -c 'cd /tmp/ansible-workstation && \
                        sudo pacman --noconfirm -S ansible && \
