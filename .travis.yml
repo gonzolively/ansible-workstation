@@ -49,7 +49,7 @@ script:
                        cd /tmp/ansible-workstation && \
                        sudo -u yaourt bash -c 'cd /tmp/ansible-workstation && \
                        sudo pacman --noconfirm -S ansible && \
-                       make test"
+                       make test'"
       fi
 
 after_success:
