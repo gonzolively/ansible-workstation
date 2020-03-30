@@ -1,12 +1,10 @@
-# Dotfile-tools
-Ansible project to install my dotfiles and dependencies.
+# ansible-workstation
+Ansible project to provision base packages and dotfiles for a personal workstation
 
-<!-- [![Build Status](https://travis-ci.org/ps1337/Dotfile-tools.png?branch=master)](https://travis-ci.org/ps1337/Dotfile-tools) -->
+![build_status](https://travis-ci.com/gonzolively/ansible-workstation.svg?branch=master&status=started)
 
 # Features
-- Aimed to work on Arch, Debian (including Kali) and Ubuntu
+- Aimed to work on Arch, Fedora and Ubuntu
 - Installs my dotfiles
 - Installs all dependencies
-- Support for secret sub-repos that are selectable by users to provide configurations on a per machine / per category base
-- Support for shared secrets
 - Automated deployment tests using Travis and Docker
