@@ -12,12 +12,5 @@ help: ## This help
 
 .DEFAULT_GOAL := help
 
-ansible: ## Install ansible
-	if which pacman; then \
-		sudo pacman --noconfirm -S ansible; \
-	elif [[ $$(cat /etc/os-release | grep fedora | wc -l) -gt 0 ]]; then \
-		sudo dnf update && \
-		sudo dnf install ansible -y; \
-
 test: ## Perform travis tests
 	ansible-playbook -i "localhost," -c local .deployTest.yml
