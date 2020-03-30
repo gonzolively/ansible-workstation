@@ -2,9 +2,9 @@ services:
   - docker
 
 env:
-  - BUILD_CFG=arch
+  #- BUILD_CFG=arch
   - BUILD_CFG=ubuntu
-  - BUILD_CFG=fedora
+  #- BUILD_CFG=fedora
 
 script:
   - |
