@@ -30,11 +30,10 @@ script:
               --rm \
               -v $PWD:/tmp/ansible-workstation \
               fedora:latest \
-              bash -c "dnf upgrade && \
-                       dnf install -y sudo make gnupg && \
+              bash -c "yum update && \
+                       yum upgrade && \
+                       yum install -y sudo make gnupg ansible && \
                        cd /tmp/ansible-workstation && \
-                       sudo dnf upgrade && \
-                       sudo dnf install -y ansible && \
                        make test"
 
       elif [ "$BUILD_CFG" == "arch" ]; then
