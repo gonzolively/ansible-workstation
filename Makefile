@@ -12,24 +12,19 @@ help: ## This help
 
 .DEFAULT_GOAL := help
 
-deploy: ## Run all roles
-	ansible-playbook --ask-become-pass -i "localhost," -c local deploy.yml
-
 ansible: ## Install ansible
 	if which pacman; then \
 		sudo pacman --noconfirm -S ansible; \
 	elif [[ $$(cat /etc/os-release | grep fedora | wc -l) -gt 0 ]]; then \
-		echo "This should not happen" \
 		sudo dnf update && \
 		sudo dnf install ansible -y; \
 	elif which apt-add-repository; then \
-		echo "This is ubuntu" \
 		sudo apt-get update && \
 		sudo apt-get -y install gnupg && \
 		sudo apt-add-repository -y ppa:ansible/ansible && \
 		sudo apt-get update && \
 		sudo apt-get install -y ansible; \
-fi
+	fi
 
 
 test: ## Perform travis tests
