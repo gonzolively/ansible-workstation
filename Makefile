@@ -13,4 +13,4 @@ help: ## This help
 .DEFAULT_GOAL := help
 
 test: ## Perform travis tests
-	ansible-playbook -i "localhost," -c local .deployTest.yml
+	ansible-playbook -i "localhost," -c local deploy.yml
