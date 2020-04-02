@@ -1,0 +1,21 @@
+---
+
+- name: Ensure .ssh directory exists.
+  file: 
+    dest: "/home/{{ user.name }}/.ssh"
+    mode: 0700 
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  become: yes
+
+- name: Install ssh keys and config
+  copy: 
+    src: "{{ item }}" 
+    dest: "/home/{{ user.name }}/.ssh/{{ item | basename }}"
+    mode: 0600
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+  with_fileglob:
+    - "files/*"
+  become: yes

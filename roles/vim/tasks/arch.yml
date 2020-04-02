@@ -1,7 +1,0 @@
----
-- name: Install neovim and dependencies for arch
-  package: name={{ item }} state=latest
-  with_items:
-    - neovim
-    - clang
-    - ctags

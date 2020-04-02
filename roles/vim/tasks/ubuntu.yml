@@ -1,8 +1,0 @@
----
-
-- name: Install neovim dependencies for ubuntu
-  package: name={{ item }} state=latest
-  with_items:
-    - clang
-    - exuberant-ctags
-    - neovim

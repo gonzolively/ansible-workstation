@@ -1,8 +1,9 @@
 ---
-- hosts: 127.0.0.1
+- hosts: localhost
   connection: local
 
   roles:
-    - { role: dotfiles }
     - { role: general, become: yes }
     - { role: vim, become: yes }
+    - { role: ssh_keys }
+    - { role: dotfiles }

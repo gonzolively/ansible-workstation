@@ -1,37 +1,8 @@
 ---
+# Download and lay down
 
-- name: Install dotfile dependencies using sudo
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - curl
-    - fontconfig
-    - git
-    - wget
+
+- name: Deploy dotfiles
   become: yes
-  become_method: sudo
-
- 
- - name: Create directory structure
-    file: path="{{ item }}" state=directory mode=750
-    with_items:
-    - "{{ ansible_env.HOME }}/.config"
-    - "{{ ansible_env.HOME }}/.local/bin"
-    - "{{ ansible_env.HOME }}/.local/python2.7/site-packages"
-
-  - name: Clone dotfiles
-    git: 
-      repo: 'https://github.com/gonzolively/dotfiles.git'
-      dest: {{ ansible_env.HOME }}/.dotfiles
-      update: yes
-      recursive: yes
-
-  - name: Stow configurations
-    command: chdir={{ ansible_env.HOME }}/.dotfiles stow {{ item }}
-    with_items:
-    - powerline
-    - zsh
-    - tmux
-    - vim
-    - git
+  become_user: knox
+  shell: "{{ role_path }}/files/deploy-dotfiles.sh >> /tmp/deploy-dotfiles.log"

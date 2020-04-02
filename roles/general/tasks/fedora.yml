@@ -1,0 +1,6 @@
+---
+
+- name: Install debian dependencies via dnf
+  package: name={{ item }} state=latest
+  with_items:
+    - zsh-common

@@ -5,27 +5,9 @@
     name: "{{ item }}"
     state: latest
   with_items:
-    - arandr
-    - blueman
-    - cmake
-    - dunst
-    - feh
-    - git
-    - gimp
-    - gparted
-    - i3-wm
-    - lxappearance
-    - nautilus
-    - pass
-    - ranger
-    - rofi
-    - scrot
-    - w3m
-    - wicd-gtk
-    - xclip
-    - xdotool
-    - xss-lock
     - zsh
+    - git
+    - unzip
 
 - name: Installing python (Arch)
   package:
@@ -38,7 +20,7 @@
     - python-pip
   when: ansible_distribution == "Archlinux"
 
-- name: Installing python (Debian/Ubuntu)
+- name: Installing python (Ubuntu)
   package:
     name: "{{ item }}"
     state: latest
@@ -47,43 +29,39 @@
     - python-pip
     - python3
     - python3-pip
-  when: ansible_distribution != "Archlinux"
+  when: ansible_distribution == "Ubuntu"
+
+- name: Installing python (Fedora)
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python
+    - python-pip
+    - python-devel.x86_64
+    - python3
+    - python3-pip
+    - python3-devel
+  when: ansible_distribution == "Fedora"
 
 - name: Update pip packages
   shell: |
     pip2 install -U pip && pip3 install -U pip
 
-- name: Install pip2 dependencies
-  shell: |
-    pip2 install i3ipc
+#- name: Install pip2 dependencies
+#  shell: |
+  #      pip2 install i3ipc
 
-- name: Install pip3 dependencies
-  shell: |
-    pip3 install pipenv i3ipc yapf pylint
+#- name: Install pip3 dependencies
+#  shell: |
+  #    pip3 install pipenv pylint
 
-- name: Install autorandr
-  shell: |
-      git clone https://github.com/phillipberndt/autorandr.git /opt/autorandr &&
-      cd /opt/autorandr &&
-      make install
-  args:
-    executable: /bin/bash
-
-- name: Activate autorandr
-  shell: |
-      test $(pidof /sbin/init) &&
-      command -v systemctl && systemctl daemon-reload &&
-      command -v systemctl && systemctl enable autorandr.service &&
-      command -v udevadm && udevadm control --reload-rules
-  args:
-    executable: /bin/bash
-  ignore_errors: true
 
 - include_tasks: arch.yml
   when: ansible_distribution == "Archlinux"
 
-- include_tasks: debian.yml
-  when: "ansible_distribution == 'Debian' or 'Kali' in ansible_distribution"
+- include_tasks: fedora.yml
+  when: ansible_distribution == "Fedora"
 
 - include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
