@@ -1,24 +1,40 @@
 ---
 
+### Update and upgrade all package repos
+
+# Ubuntu
+- name: apt-get update
+  apt:
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: apt-get upgrade
+  apt:
+    upgrade: dist
+  when: ansible_distribution == "Ubuntu"
+
+# Fedora
+- name: dnf upgrade
+  dnf:
+    update_cache: yes
+    name: "*"
+    state: latest
+  when: ansible_distribution == "Fedora"
+
+# Arch
+- name: pacman -Syu
+  pacman:
+    update_cache: yes
+    upgrade: yes
+  when: ansible_distribution == "Archlinux"
+
+
 - name: Install general dependencies via package manager
   package:
     name: "{{ item }}"
     state: latest
   with_items:
-    - zsh
     - git
-    - unzip
-
-- name: Installing python (Arch)
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - python2
-    - python2-pip
-    - python
-    - python-pip
-  when: ansible_distribution == "Archlinux"
 
 - name: Installing python (Ubuntu)
   package:
@@ -38,11 +54,22 @@
   with_items:
     - python
     - python-pip
-    - python-devel.x86_64
+    - python-devel
     - python3
     - python3-pip
     - python3-devel
   when: ansible_distribution == "Fedora"
+
+- name: Installing python (Arch)
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - python2
+    - python2-pip
+    - python
+    - python-pip
+  when: ansible_distribution == "Archlinux"
 
 - name: Update pip packages
   shell: |
