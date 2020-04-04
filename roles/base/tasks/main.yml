@@ -1,40 +1,20 @@
 ---
 
-### Update and upgrade all package repos
-
-# Ubuntu
-- name: apt-get update
-  apt:
-    update_cache: yes
+# Run distro specific package tasks before installing any base
+- include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
 
-- name: apt-get upgrade
-  apt:
-    upgrade: dist
-  when: ansible_distribution == "Ubuntu"
-
-# Fedora
-- name: dnf upgrade
-  dnf:
-    update_cache: yes
-    name: "*"
-    state: latest
+- include_tasks: fedora.yml
   when: ansible_distribution == "Fedora"
 
-# Arch
-- name: pacman -Syu
-  pacman:
-    update_cache: yes
-    upgrade: yes
+- include_tasks: arch.yml
   when: ansible_distribution == "Archlinux"
 
-
-- name: Install general dependencies via package manager
-  package:
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - git
+# Base tasks and program install
+- name: Set the hostname
+  hostname:
+    name: "{{ hostname }}"
+  when: hostname is defined
 
 - name: Installing python (Ubuntu)
   package:
@@ -71,24 +51,15 @@
     - python-pip
   when: ansible_distribution == "Archlinux"
 
-- name: Update pip packages
+- name: Update pip packages - Ubuntu/Fedora
   shell: |
     pip2 install -U pip && pip3 install -U pip
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Fedora'
 
-#- name: Install pip2 dependencies
-#  shell: |
-  #      pip2 install i3ipc
-
-#- name: Install pip3 dependencies
-#  shell: |
-  #    pip3 install pipenv pylint
-
-
-- include_tasks: arch.yml
+- name: Update pip packages - Archlinux
+  shell: |
+    pip install --upgrade pip && pip3 install -U pip
   when: ansible_distribution == "Archlinux"
 
-- include_tasks: fedora.yml
-  when: ansible_distribution == "Fedora"
-
-- include_tasks: ubuntu.yml
-  when: ansible_distribution == "Ubuntu"
+# Install user programs and packages
+- include_tasks: packages.yml

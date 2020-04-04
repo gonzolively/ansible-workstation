@@ -1,0 +1,7 @@
+---
+- name: Install universal base packages
+  package:
+      name: "{{ base_packages }}"
+      state: present
+  tags:
+    - packages

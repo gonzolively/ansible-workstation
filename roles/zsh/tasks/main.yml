@@ -1,0 +1,6 @@
+---
+
+* Install zsh 
+* Change shell to ZSH (chsh -s $(which zsh)
+* install oh-my-zsh
+* lay down config

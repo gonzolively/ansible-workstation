@@ -1,5 +1,11 @@
 ---
 
+# Arch
+- name: packman update & upgrade
+  pacman:
+    update_cache: yes
+    upgrade: yes
+
 - name: Install arch dependencies via pacman
   package: name={{ item }} state=latest
   with_items:

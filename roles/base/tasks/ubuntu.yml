@@ -1,0 +1,23 @@
+---
+
+#Add repositories needed for 3rd party packages
+
+- name: Add repositories needed for 3rd party packages
+  apt_repository: 
+    repo: '{{ item }}'
+  with_items:
+      - ppa:mmstick76/alacritty
+
+# Ubuntu
+- name: apt-get update
+  apt:
+    update_cache: yes
+
+- name: apt-get upgrade
+  apt:
+    upgrade: dist
+
+#- name: Install ubuntu dependencies via apt-get
+#  package: name={{ item }} state=latest
+#  with_items:
+  #    - 

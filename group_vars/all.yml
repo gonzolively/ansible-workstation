@@ -1,6 +1,5 @@
 user:
     name: knox
-    uid: 1000
     group: knox
     shell: /usr/bin/zsh
     email:  knox.lively@gmail.com
@@ -9,3 +8,14 @@ user:
         rotate: 8
 
 hostname: animal
+
+base_packages:
+    - git
+    - rsync
+    - glances
+    - lsof
+    - ncdu
+    - tmux
+    - acl
+    - zsh
+    - alacritty
