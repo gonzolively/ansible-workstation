@@ -23,6 +23,6 @@ Ansible project to provision my favorite programs, utilities, and dotfiles for a
 
 4. Download *.vault_pass.txt* from your super secret location and place in the project root.
 
-5. Run the playbook!
+5. Run bootstrap script
 
-`ansible-playbook -l localhost deploy.yml --vault-password-file .vault_pass.txt`
+`./bootstrap.sh`
