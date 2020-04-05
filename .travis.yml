@@ -29,6 +29,7 @@ script:
       elif [ "$BUILD_CFG" == "fedora" ]; then
           docker run \
               --rm \
+              --privileged \
               -v $PWD:/tmp/ansible-workstation \
               fedora:latest \
               bash -c "echo "y" | dnf upgrade && \
@@ -39,6 +40,7 @@ script:
       elif [ "$BUILD_CFG" == "arch" ]; then
           docker run \
               --rm \
+              --privileged \
               -v $PWD:/tmp/ansible-workstation \
               alekzonder/archlinux-yaourt:latest \
               bash -c "echo "Y" | sudo pacman -Sy archlinux-keyring && \
