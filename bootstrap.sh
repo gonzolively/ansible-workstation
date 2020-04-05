@@ -3,7 +3,7 @@
 
 # This script is intended to be ran after a fresh os install in order to install ansible and start the deployment process.
 
-command="ansible-playbook -l localhost deploy.yml --vault-password-file ~/.vault_pass.txt --check --ask-become-pass"
+command="ansible-playbook -l localhost deploy.yml --vault-password-file vault_pass.txt --check --ask-become-pass"
 
 
 
