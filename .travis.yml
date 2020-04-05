@@ -11,6 +11,7 @@ script:
       if [ "$BUILD_CFG" == "ubuntu" ]; then
           docker run \
               --rm \
+              --privileged \
               -v $PWD:/tmp/ansible-workstation \
               ubuntu:latest \
               bash -c "apt update && \
