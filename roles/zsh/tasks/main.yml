@@ -1,6 +1,40 @@
 ---
 
-* Install zsh 
-* Change shell to ZSH (chsh -s $(which zsh)
-* install oh-my-zsh
-* lay down config
+- name: Set zsh as default shell
+  become: yes
+  user:
+    name: "{{ lookup('env','USER') }}"
+    shell: "{{ user.shell }}"
+
+- name: Check to see if 'Oh My Zsh' is installed
+  command: "ls -la {{ lookup('env','HOME') }}/.oh-my-zsh"
+  register: ohmyzsh_exists
+  ignore_errors: yes
+
+- name: Download 'Oh My Zsh' install script
+  get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh 
+    dest: "{{ downloads }}/install.sh"
+  when: ohmyzsh_exists.rc != 0
+
+- name: Set install script to executable
+  file: 
+    dest: "{{ downloads }}/install.sh"
+    mode: a+x
+  when: ohmyzsh_exists.rc != 0
+
+- name: Install 'Oh My Zsh'
+  shell: "{{ downloads }}/./install.sh"
+  when: ohmyzsh_exists.rc != 0
+
+### Antigen plugin manager stuff
+- name: Check to see if antigen is installed
+  command: "ls -la {{ lookup('env','HOME') }}/.oh-my-zsh/plugins/antigen"
+  register: antigen_exists
+  ignore_errors: yes
+
+- name: Download antigen
+  git:
+    repo: https://github.com/zsh-users/antigen.git
+    dest: "{{ lookup('env','HOME') }}/.oh-my-zsh/plugins/antigen"
+  when: antigen_exists.rc != 0

@@ -1,9 +1,17 @@
 ---
-- name: Install vim
-  package: name={{ item }} state=latest
-  with_items:
-    - vim
+# Basic vim setup. Installation of vim is handled in base
 
-#- name: Download & install vundle
+- name: Check to see if vundle is installed
+  command: "ls -la {{ lookup('env','HOME') }}/.vim/bundle"
+  register: vundle_exists
+  ignore_errors: yes
 
-#- name: Download plugins
+- name: Install vundle
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: "{{ lookup('env','HOME') }}/.vim/bundle/Vundle.vim"
+  when: vundle_exists.rc != 0
+
+- name: Install vundle plugins
+  shell: echo -ne '\n'| vim +PluginInstall +qall 
+  when: vundle_exists.rc == 0

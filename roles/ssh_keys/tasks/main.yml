@@ -2,20 +2,20 @@
 
 - name: Ensure .ssh directory exists.
   file: 
-    dest: "/home/{{ user.name }}/.ssh"
+    dest: "{{ lookup('env','HOME') }}/.ssh"
     mode: 0700 
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('env','USER') }}"
     state: directory
   become: yes
 
 - name: Install ssh keys and config
   copy: 
     src: "{{ item }}" 
-    dest: "/home/{{ user.name }}/.ssh/{{ item | basename }}"
+    dest: "{{ lookup('env','HOME') }}/.ssh/{{ item | basename }}"
     mode: 0600
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('env','USER') }}"
   with_fileglob:
     - "files/*"
   become: yes

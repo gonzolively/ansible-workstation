@@ -1,8 +1,11 @@
 ---
 # Download and lay down
 
+- name: Check to see if dotfiles are installed
+  command: "ls -la {{ lookup('env','HOME') }}/.dotfiles"
+  register: dotfiles_exist
+  ignore_errors: yes
 
 - name: Deploy dotfiles
-  become: yes
-  become_user: knox
   shell: "{{ role_path }}/files/deploy-dotfiles.sh >> /tmp/deploy-dotfiles.log"
+  when: dotfiles_exist.rc != 0

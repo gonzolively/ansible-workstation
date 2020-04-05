@@ -9,6 +9,8 @@ user:
 
 hostname: animal
 
+downloads: /tmp/downloads
+
 base_packages:
     - git
     - rsync

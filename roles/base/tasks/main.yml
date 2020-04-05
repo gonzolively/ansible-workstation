@@ -16,6 +16,13 @@
     name: "{{ hostname }}"
   when: hostname is defined
 
+- name: Create download directory for various utils
+  file:
+    state: directory
+    path: "{{ downloads }}"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
+
 - name: Installing python (Ubuntu)
   package:
     name: "{{ item }}"

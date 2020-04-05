@@ -4,8 +4,7 @@
 
   roles:
     - { role: base, become: yes }
-    - { role: users, become: yes }
-    - { role: vim, become: yes }
-      #    - { role: zsh }
+    - { role: vim }
+    - { role: zsh }
     - { role: ssh_keys }
     - { role: dotfiles }
