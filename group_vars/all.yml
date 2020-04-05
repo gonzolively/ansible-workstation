@@ -1,23 +1,35 @@
 user:
-    name: knox
-    group: knox
-    shell: /usr/bin/zsh
-    email:  knox.lively@gmail.com
-    log:
-        dir: log
-        rotate: 8
+  name: "{{ lookup('env', 'USER') }}"
+  home: "{{ lookup('env', 'HOME') }}"
+  shell: /usr/bin/zsh
+  email:  knox.lively@gmail.com
 
 hostname: animal
 
 downloads: /tmp/downloads
 
 base_packages:
-    - git
-    - rsync
-    - glances
-    - lsof
-    - ncdu
-    - tmux
-    - acl
-    - zsh
-    - alacritty
+  - git
+  - rsync
+  - glances
+  - lsof
+  - ncdu
+  - tmux
+  - acl
+  - zsh
+  - alacritty
+  - jq
+
+
+# Program vars
+antigen:
+  location: "{{ user.home }}/.oh-my-zsh/plugins/antigen"
+  repo: "https://github.com/zsh-users/antigen.git"
+
+ohmyzsh:
+  download_url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+  location: "{{ user.home }}/.ohmyzsh"
+
+vundle:
+  location: "{{ user.home }}/.vim/bundle/Vundle.vim"
+  repo: "https://github.com/VundleVim/Vundle.vim.git"

@@ -6,14 +6,15 @@
     name: "{{ lookup('env','USER') }}"
     shell: "{{ user.shell }}"
 
+### Oh My Zsh
 - name: Check to see if 'Oh My Zsh' is installed
-  command: "ls -la {{ lookup('env','HOME') }}/.oh-my-zsh"
+  command: "ls -la {{ ohmyzsh.location }}"
   register: ohmyzsh_exists
   ignore_errors: yes
 
 - name: Download 'Oh My Zsh' install script
   get_url:
-    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh 
+    url: "{{ ohmyzsh.download_url }}"
     dest: "{{ downloads }}/install.sh"
   when: ohmyzsh_exists.rc != 0
 
@@ -27,14 +28,14 @@
   shell: "{{ downloads }}/./install.sh"
   when: ohmyzsh_exists.rc != 0
 
-### Antigen plugin manager stuff
+### Antigen plugin manager
 - name: Check to see if antigen is installed
-  command: "ls -la {{ lookup('env','HOME') }}/.oh-my-zsh/plugins/antigen"
+  command: "ls -la {{ antigen.location }}"
   register: antigen_exists
   ignore_errors: yes
 
 - name: Download antigen
   git:
-    repo: https://github.com/zsh-users/antigen.git
-    dest: "{{ lookup('env','HOME') }}/.oh-my-zsh/plugins/antigen"
+    repo: "{{ antigen.repo }}"
+    dest: "{{ antigen.location }}"
   when: antigen_exists.rc != 0

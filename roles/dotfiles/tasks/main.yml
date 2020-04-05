@@ -2,7 +2,7 @@
 # Download and lay down
 
 - name: Check to see if dotfiles are installed
-  command: "ls -la {{ lookup('env','HOME') }}/.dotfiles"
+  command: "ls -la {{ user.home }}/.dotfiles"
   register: dotfiles_exist
   ignore_errors: yes
 

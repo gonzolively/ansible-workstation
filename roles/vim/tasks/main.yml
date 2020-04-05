@@ -1,17 +1,16 @@
 ---
 # Basic vim setup. Installation of vim is handled in base
 
-- name: Check to see if vundle is installed
-  command: "ls -la {{ lookup('env','HOME') }}/.vim/bundle"
+- name: Check to see if Vundle is installed
+  command: "ls -la {{ vundle.location }}"
   register: vundle_exists
   ignore_errors: yes
 
-- name: Install vundle
+- name: Install Vundle
   git:
-    repo: https://github.com/VundleVim/Vundle.vim.git
-    dest: "{{ lookup('env','HOME') }}/.vim/bundle/Vundle.vim"
+    repo: "{{ vundle.repo }}"
+    dest: "{{ vundle.location }}"
   when: vundle_exists.rc != 0
 
-- name: Install vundle plugins
-  shell: echo -ne '\n'| vim +PluginInstall +qall 
-  when: vundle_exists.rc == 0
+- name: Install Vundle plugins
+  shell: "echo -ne '\n' | vim +PluginInstall +qall"

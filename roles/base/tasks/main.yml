@@ -20,8 +20,8 @@
   file:
     state: directory
     path: "{{ downloads }}"
-    owner: "{{ lookup('env', 'USER') }}"
-    group: "{{ lookup('env', 'USER') }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
 
 - name: Installing python (Ubuntu)
   package:
