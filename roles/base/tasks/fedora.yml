@@ -6,7 +6,7 @@
     name: "*"
     state: latest
 
-- name: Install fedora dependencies via dnf
-  package: name={{ item }} state=latest
-  with_items:
-    - zsh-common
+#- name: Install fedora dependencies via dnf
+#  package: name={{ item }} state=latest
+#  with_items:
+#    - 
