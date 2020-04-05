@@ -21,7 +21,7 @@ Ansible project to provision my favorite programs, utilities, and dotfiles for a
 
 `cd anaible-workstation`
 
-4. Download *.vault_pass.txt* from your super secret location and place in the project root.
+4. Download *vault_pass.txt* from your super secret location and place in the project root.
 
 5. Run bootstrap script
 
