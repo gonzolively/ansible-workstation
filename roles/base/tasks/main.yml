@@ -1,6 +1,6 @@
 ---
 
-# Run distro specific package tasks before installing any base
+# Run distro specific package tasks before installing running base
 - include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
 
@@ -9,6 +9,7 @@
 
 - include_tasks: arch.yml
   when: ansible_distribution == "Archlinux"
+
 
 # Base tasks and program install
 - name: Set the hostname

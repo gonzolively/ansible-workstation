@@ -11,6 +11,3 @@
     repo: "{{ vundle.repo }}"
     dest: "{{ vundle.location }}"
   when: vundle_exists.rc != 0
-
-- name: Install Vundle plugins
-  shell: "echo -ne '\n' | vim +PluginInstall +qall"

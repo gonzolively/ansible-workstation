@@ -5,6 +5,8 @@
   roles:
     - { role: base, become: yes }
     - { role: vim }
+    - { role: tmux }
     - { role: zsh }
     - { role: ssh_keys }
     - { role: dotfiles }
+    - { role: post_install }

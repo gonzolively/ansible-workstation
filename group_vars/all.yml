@@ -19,6 +19,10 @@ base_packages:
   - zsh
   - alacritty
   - jq
+  - htop
+  - telegram
+  - vagrant
+  - virtualbox
 
 
 # Program vars
@@ -27,8 +31,12 @@ antigen:
   repo: "https://github.com/zsh-users/antigen.git"
 
 ohmyzsh:
+  location: "{{ user.home }}/.oh-my-zsh"
   download_url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
-  location: "{{ user.home }}/.ohmyzsh"
+
+tpm:
+  location: "{{ user.home }}/.tmux/plugins/tpm"
+  repo: "https://github.com/tmux-plugins/tpm"
 
 vundle:
   location: "{{ user.home }}/.vim/bundle/Vundle.vim"

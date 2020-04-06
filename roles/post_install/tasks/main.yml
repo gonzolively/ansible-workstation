@@ -1,0 +1,14 @@
+---
+
+# These tasks must be performed after dotfiles are in
+
+- name: Install Antigen plugins
+  shell: "source {{ user.home}}/.zshrc && antigen update"
+  args:
+    executable: "{{ user.shell }}"
+
+- name: Install Vundle plugins
+  shell: "echo -ne '\n' | vim +PluginInstall +qall"
+
+- name: Install Tmux plugins
+  shell: "{{ tpm.location }}/scripts/install_plugins.sh"

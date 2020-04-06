@@ -3,7 +3,7 @@
 - name: Set zsh as default shell
   become: yes
   user:
-    name: "{{ lookup('env','USER') }}"
+    name: "{{ user.name }}"
     shell: "{{ user.shell }}"
 
 ### Oh My Zsh
@@ -29,12 +29,12 @@
   when: ohmyzsh_exists.rc != 0
 
 ### Antigen plugin manager
-- name: Check to see if antigen is installed
+- name: Check to see if Antigen is installed
   command: "ls -la {{ antigen.location }}"
   register: antigen_exists
   ignore_errors: yes
 
-- name: Download antigen
+- name: Download Antigen if not already installed
   git:
     repo: "{{ antigen.repo }}"
     dest: "{{ antigen.location }}"

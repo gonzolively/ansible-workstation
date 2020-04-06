@@ -9,7 +9,6 @@
       - ppa:mmstick76/alacritty
       - ppa:atareao/telegram
 
-# Ubuntu
 - name: apt-get update
   apt:
     update_cache: yes
@@ -18,7 +17,7 @@
   apt:
     upgrade: dist
 
-#- name: Install ubuntu dependencies via apt-get
-#  package: name={{ item }} state=latest
-#  with_items:
-#      - software-properties-common 
+- name: Install ubuntu dependencies via apt-get
+  package: name={{ item }} state=latest
+  with_items:
+      - software-properties-common

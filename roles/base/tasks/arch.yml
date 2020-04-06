@@ -7,6 +7,8 @@
     upgrade: yes
 
 - name: Install arch dependencies via pacman
-  package: name={{ item }} state=latest
+  package:
+    name: {{ item }}
+    state: latest
   with_items:
       - chromium
