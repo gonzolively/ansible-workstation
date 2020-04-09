@@ -1,6 +1,16 @@
 ---
 
+# Run distro specific package tasks before installing running base
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: fedora.yml
+  when: ansible_distribution == "Fedora"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
 # These tasks must be performed after dotfiles are in
+
 
 - name: Install Antigen plugins
   shell: "source {{ user.home}}/.zshrc && antigen update"
@@ -9,6 +19,9 @@
 
 - name: Install Vundle plugins
   shell: "echo -ne '\n' | vim +PluginInstall +qall"
+
+- name: Install Markdown plugin dependencies
+  shell: "cd {{ user.home}}/.vim/bundle/markdown-preview.nvim/app && yarn"
 
 - name: Install Tmux plugins
   shell: "{{ tpm.location }}/scripts/install_plugins.sh"

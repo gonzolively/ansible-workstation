@@ -3,7 +3,8 @@
 
 # This script is intended to be ran after a fresh os install in order to install ansible and start the deployment process.
 
-command="ansible-playbook -l localhost deploy.yml --vault-password-file vault_pass.txt --check --ask-become-pass"
+command="export ANSIBLE_LOAD_CALLBACK_PLUGINS=1 && ansible-playbook -l localhost deploy.yml --vault-password-file vault_pass.txt --check --ask-become-pass"
+
 # If available, use LSB to identify distribution
 if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
    DISTRO=$(lsb_release -i | cut -d: -f2 | sed s/'^\t'//)

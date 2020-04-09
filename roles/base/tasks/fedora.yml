@@ -4,11 +4,21 @@
   dnf:
     update_cache: yes
     name: "*"
-    state: latest
+
+- name: make sure dnf-plugins.core installed
+  dnf:
+    name: dnf-plugins-core
+    state: present
+
+- name: Install 3rd party repositories
+  command: "dnf copr enable {{ item }}"
+  state: latest
+  with_items:
+    - {{ dnf_repos }}
 
 #- name: Install fedora dependencies via dnf
-#  package:
-  #  name: {{ item }} 
-  #  state: latest
-#  with_items:
-#    - 
+  #package:
+    #name: {{ item }}
+    #state: latest
+    #  with_items:
+    #    - hunspell-devel

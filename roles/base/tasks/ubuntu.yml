@@ -1,13 +1,40 @@
 ---
 
 #Add repositories needed for 3rd party packages
+- name: Get release codename
+  shell: cat /etc/os-release | grep UBUNTU_CODENAME | cut -d "=" -f 2
+  register: codename
 
 - name: Add repositories needed for 3rd party packages
   apt_repository: 
-    repo: '{{ item }}'
+    repo: "{{ item }}"
   with_items:
-      - ppa:mmstick76/alacritty
-      - ppa:atareao/telegram
+    - "{{ apt_repos }}"
+
+- name: Add an Apt signing keys for programs
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - "{{ apt_keys }}"
+
+- name: Add apt keys from ubuntu keyserver
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: "{{ item }}"
+  with_items:
+    - "{{ ubuntu_keyserver_keys }}"
+
+- name: Create 3rd party lists in sources
+  template: 
+    src: "{{ item }}"
+    dest: "/etc/apt/sources.list.d/{{ item | basename | regex_replace('\\.j2$', '') }}"
+    mode: 0600 
+    owner: root
+    group: root
+  with_fileglob:
+    - ../templates/sources/*.j2
 
 - name: apt-get update
   apt:
@@ -17,7 +44,9 @@
   apt:
     upgrade: dist
 
-- name: Install ubuntu dependencies via apt-get
-  package: name={{ item }} state=latest
+- name: Install ubuntu dependencies and specific programs
+  package: 
+    name: "{{ item }}"
+    state: latest
   with_items:
-      - software-properties-common
+    - "{{ ubuntu_packages }}"

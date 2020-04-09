@@ -7,5 +7,5 @@
   ignore_errors: yes
 
 - name: Deploy dotfiles
-  shell: "{{ role_path }}/files/deploy-dotfiles.sh >> /tmp/deploy-dotfiles.log"
+  shell: "{{ role_path }}/files/deploy-dotfiles.sh > /tmp/deploy-dotfiles.log"
   when: dotfiles_exist.rc != 0

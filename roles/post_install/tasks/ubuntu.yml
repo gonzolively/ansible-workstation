@@ -1,0 +1,17 @@
+---
+
+# Download and install Google-Chrome
+
+- name: Download Google-Chrome
+  get_url:
+    url: "{{ chrome.deb_url }}"
+    dest: "{{ downloads }}/{{ chrome.deb_url | basename }}"
+  when: has_gui != ""
+
+
+- name: Install Google-Chrome
+  command: "dpkg -i {{ downloads }}/{{ chrome.deb_url | basename }}"
+  become: yes
+  # Mostly for testing purposes as there is no DE istalled
+  ignore_errors: yes
+  when: has_gui != ""

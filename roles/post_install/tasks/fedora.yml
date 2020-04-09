@@ -1,0 +1,6 @@
+---
+# Download and install Google-Chrome
+
+- name: Install Google-Chrome
+  command: "dnf install {{ chrome.rpm_url }}"
+  become: yes

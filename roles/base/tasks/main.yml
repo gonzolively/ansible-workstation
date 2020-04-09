@@ -1,5 +1,17 @@
 ---
 
+- name: Enable time stats on ansible output
+  shell: export ANSIBLE_LOAD_CALLBACK_PLUGINS=1
+
+- name: Detect if GUI exists
+  shell: "echo $XDG_CURRENT_DESKTOP"
+  register: gui
+  ignore_errors: yes
+
+# Set variable for system-wide use
+-  set_fact:
+     has_gui: "{{ gui.stdout }}" 
+
 # Run distro specific package tasks before installing running base
 - include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
@@ -10,8 +22,6 @@
 - include_tasks: arch.yml
   when: ansible_distribution == "Archlinux"
 
-
-# Base tasks and program install
 - name: Set the hostname
   hostname:
     name: "{{ hostname }}"
