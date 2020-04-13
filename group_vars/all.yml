@@ -67,7 +67,7 @@ graphical_packages:
   - transmission-qt
 
 snap_packages:
-  - spt
+  - spotify
 
 apt_packages:
   - insync
@@ -91,18 +91,6 @@ chrome:
 
 insync:
   sources_file: "{{ apt.sources_dir }}/insync.list"
-
-spotifyd:
-  username: "{{ vault_spotifyd.username }}"
-  password: "{{ vault_spotifyd.password }}"
-  config: "{{ user.home }}/.config/spotifyd/spotifyd.conf"
-
-spt:
-  config_dir: "{{ user.home }}/snap/spt/current/.config/spotify-tui"
-  client_id: "{{ vault_spt.client_id }}"
-  client_secret: "{{ vault_spt.client_secret }}"
-  device_id: ""
-  port: 8888
 
 tpm:
   location: "{{ user.home }}/.tmux/plugins/tpm"

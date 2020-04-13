@@ -13,6 +13,5 @@
     - { role: zsh }
     - { role: ssh_keys }
 #    - { role: i3wm }
-    - { role: spotify }
     - { role: dotfiles }
     - { role: post_install }
