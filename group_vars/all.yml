@@ -1,12 +1,22 @@
+# User info
 user:
   name: "{{ lookup('env', 'USER') }}"
   home: "{{ lookup('env', 'HOME') }}"
   shell: /usr/bin/zsh
   email:  knox.lively@gmail.com
 
-hostname: animal
+# Sytem info
+host:
+  xdg: "/run/user/1000"
+  hostname: animal
+
 downloads: /tmp/downloads
 
+systemd:
+  config_path: /lib/systemd/system
+  bin_path: /usr/lib
+
+# Repo nfo
 ubuntu_keyserver_keys:
   - ACCAF35C
 
@@ -18,6 +28,7 @@ apt_repos:
   - ppa:wereturtle/ppa
   - ppa:atareao/telegram
   - ppa:bit-team/stable
+  - ppa:stebbins/handbrake-releases
 
 dnf_repos:
   - wereturtle/stable
@@ -25,6 +36,8 @@ dnf_repos:
 # Package info
 base_packages:
   - git
+  - lynx
+  - mutt
   - rsync
   - glances
   - lsof
@@ -38,6 +51,7 @@ base_packages:
   - pwgen
   - nodejs
   - yarn
+  - snapd
 
 graphical_packages:
   - alacritty
@@ -52,8 +66,15 @@ graphical_packages:
   - libreoffice
   - transmission-qt
 
-ubuntu_packages:
+snap_packages:
+  - spt
+
+apt_packages:
   - insync
+  - libasound2
+
+aptgui_packages:
+  - handbrake-gtk
 
 # Program vars
 antigen:
@@ -70,6 +91,18 @@ chrome:
 
 insync:
   sources_file: "{{ apt.sources_dir }}/insync.list"
+
+spotifyd:
+  username: "{{ vault_spotifyd.username }}"
+  password: "{{ vault_spotifyd.password }}"
+  config: "{{ user.home }}/.config/spotifyd/spotifyd.conf"
+
+spt:
+  config_dir: "{{ user.home }}/snap/spt/current/.config/spotify-tui"
+  client_id: "{{ vault_spt.client_id }}"
+  client_secret: "{{ vault_spt.client_secret }}"
+  device_id: ""
+  port: 8888
 
 tpm:
   location: "{{ user.home }}/.tmux/plugins/tpm"

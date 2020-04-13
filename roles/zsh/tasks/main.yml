@@ -1,5 +1,14 @@
 ---
 
+- name: Copy zprofile onto system
+  copy: 
+    src: "{{ role_path }}/files/zprofile" 
+    dest: "/etc/zsh/zprofile"
+    mode: 0644
+    owner: "root"
+    group: "root"
+  become: yes
+  
 - name: Set zsh as default shell
   become: yes
   user:
@@ -8,29 +17,30 @@
 
 ### Oh My Zsh
 - name: Check to see if 'Oh My Zsh' is installed
-  command: "ls -la {{ ohmyzsh.location }}"
-  register: ohmyzsh_exists
-  ignore_errors: yes
+  stat:
+    path: "{{ ohmyzsh.location }}"
+  register: omz
 
 - name: Download 'Oh My Zsh' install script
   get_url:
     url: "{{ ohmyzsh.download_url }}"
     dest: "{{ downloads }}/install.sh"
-  when: ohmyzsh_exists.rc != 0
+  when: omz.stat.exists == False
 
 - name: Set install script to executable
   file: 
     dest: "{{ downloads }}/install.sh"
     mode: a+x
-  when: ohmyzsh_exists.rc != 0
+  when: omz.stat.exists == False
 
 - name: Install 'Oh My Zsh'
   shell: "{{ downloads }}/./install.sh"
-  when: ohmyzsh_exists.rc != 0
+  when: omz.stat.exists == False
 
 ### Antigen plugin manager
 - name: Check to see if Antigen is installed
-  command: "ls -la {{ antigen.location }}"
+  stat:
+    path: "{{ antigen.location }}"
   register: antigen_exists
   ignore_errors: yes
 
@@ -38,4 +48,4 @@
   git:
     repo: "{{ antigen.repo }}"
     dest: "{{ antigen.location }}"
-  when: antigen_exists.rc != 0
+  when: antigen_exists.stat.exists == False

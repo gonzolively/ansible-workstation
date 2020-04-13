@@ -2,11 +2,17 @@
 - hosts: localhost
   connection: local
 
+  vars_files:
+    - ./group_vars/vault.yml
+    - ./group_vars/all.yml
+
   roles:
     - { role: base, become: yes }
     - { role: vim }
     - { role: tmux }
     - { role: zsh }
     - { role: ssh_keys }
+#    - { role: i3wm }
+    - { role: spotify }
     - { role: dotfiles }
     - { role: post_install }

@@ -36,17 +36,25 @@
   with_fileglob:
     - ../templates/sources/*.j2
 
-- name: apt-get update
+- name: Update APT repos (apt-get update)
   apt:
     update_cache: yes
 
-- name: apt-get upgrade
+- name: Upgrade System (apt-get upgrade)
   apt:
     upgrade: dist
 
-- name: Install ubuntu dependencies and specific programs
+- name: Install APT specific packages
   package: 
     name: "{{ item }}"
     state: latest
   with_items:
-    - "{{ ubuntu_packages }}"
+    - "{{ apt_packages }}"
+
+- name: Install APT specific GUI packages if GUI exists
+  when: has_gui != ""
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - "{{ aptgui_packages }}"

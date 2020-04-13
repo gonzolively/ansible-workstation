@@ -15,3 +15,8 @@
   # Mostly for testing purposes as there is no DE istalled
   ignore_errors: yes
   when: has_gui != ""
+
+- name: Remove dependencies that are no longer required
+  become: yes
+  apt:
+    autoremove: yes

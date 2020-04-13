@@ -1,13 +1,14 @@
 ---
 # Basic vim setup. Installation of vim is handled in base
 
+### Oh My Zsh
 - name: Check to see if Vundle is installed
-  command: "ls -la {{ vundle.location }}"
-  register: vundle_exists
-  ignore_errors: yes
+  stat:
+    path: "{{ vundle.location }}"
+  register: v
 
 - name: Install Vundle
   git:
     repo: "{{ vundle.repo }}"
     dest: "{{ vundle.location }}"
-  when: vundle_exists.rc != 0
+  when: v.stat.exists == False

@@ -1,0 +1,8 @@
+---
+
+- name: Install i3wm
+  shell: echo "Will do later"
+
+# Check out homedudes configs
+# https://github.com/bookercodes/dotfiles/tree/ubuntu/.i3
+

@@ -7,6 +7,12 @@
   with_items:
     - "{{ base_packages }}"
 
+- name: Install SNAP packages
+  snap: 
+    name: "{{ item }}"
+  with_items:
+    - "{{ snap_packages }}"
+
 - name: Install graphical packages if GUI exists
   package:
     name: "{{ item }}"

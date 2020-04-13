@@ -2,10 +2,10 @@
 # Download and lay down
 
 - name: Check to see if dotfiles are installed
-  command: "ls -la {{ user.home }}/.dotfiles"
-  register: dotfiles_exist
-  ignore_errors: yes
+  stat:
+    path: "{{ user.home }}/.dotfiles"
+  register: dotfiles
 
 - name: Deploy dotfiles
   shell: "{{ role_path }}/files/deploy-dotfiles.sh > /tmp/deploy-dotfiles.log"
-  when: dotfiles_exist.rc != 0
+  when: dotfiles.stat.exists == False

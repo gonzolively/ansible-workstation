@@ -8,9 +8,9 @@
   register: gui
   ignore_errors: yes
 
-# Set variable for system-wide use
--  set_fact:
-     has_gui: "{{ gui.stdout }}" 
+- name: Set GUI variable
+  set_fact:
+    has_gui: "{{ gui.stdout }}"
 
 # Run distro specific package tasks before installing running base
 - include_tasks: ubuntu.yml
@@ -24,7 +24,7 @@
 
 - name: Set the hostname
   hostname:
-    name: "{{ hostname }}"
+    name: "{{ host.hostname }}"
   when: hostname is defined
 
 - name: Create download directory for various utils
@@ -78,6 +78,11 @@
   shell: |
     pip install --upgrade pip && pip3 install -U pip
   when: ansible_distribution == "Archlinux"
+
+- name: Install pip dependencies
+  pip:
+    name: 
+    - github3.py
 
 # Install user programs and packages
 - include_tasks: packages.yml

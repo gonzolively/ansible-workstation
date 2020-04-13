@@ -1,12 +1,12 @@
 ---
 
 - name: Check to see if TPM is installed
-  command: "ls -la {{ tpm.location }}"
-  register: tpm_exists
-  ignore_errors: yes
+  stat:
+    path: "{{ tpm.location }}"
+  register: t
 
 - name: Install TPM (Tmux Plugin Manager)
   git:
     repo: "{{ tpm.repo }}"
     dest: "{{ tpm.location }}"
-  when: tpm_exists.rc != 0
+  when: t.stat.exists == False
