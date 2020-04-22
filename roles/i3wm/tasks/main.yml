@@ -1,8 +1,15 @@
 ---
 
-- name: Install i3wm
-  shell: echo "Will do later"
+- name: Add Reglith repository
+  apt_repository:
+    repo: ppa:regolith-linux/release
 
-# Check out homedudes configs
-# https://github.com/bookercodes/dotfiles/tree/ubuntu/.i3
+- name: Update APT repos (apt-get update)
+  apt:
+    update_cache: yes
 
+- name: Install Regolith i3 WM if GUI exists
+  package:
+    name: regolith-desktop
+    state: present
+  when: has_gui != ""
