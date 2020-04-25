@@ -22,7 +22,6 @@
 - name: Set the hostname
   hostname:
     name: "{{ host.hostname }}"
-  when: hostname is defined
 
 - name: Create download directory for various utils
   file:

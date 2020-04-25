@@ -2,6 +2,10 @@
 - hosts: localhost
   connection: local
 
+  environment:
+    ANSIBLE_STDOUT_CALLBACK: debug
+    ANSIBLE_LOAD_CALLBACK_PLUGINS: 1
+
   vars_files:
     - ./group_vars/vault.yml
     - ./group_vars/all.yml
