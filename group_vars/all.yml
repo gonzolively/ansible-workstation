@@ -22,8 +22,10 @@ ubuntu_keyserver_keys:
 
 apt_keys:
   - https://dl.yarnpkg.com/debian/pubkey.gpg
+  - https://download.spotify.com/debian/pubkey.gpg
 
 apt_repos:
+  - ppa:regolith-linux/release
   - ppa:mmstick76/alacritty
   - ppa:wereturtle/ppa
   - ppa:atareao/telegram
@@ -52,6 +54,7 @@ base_packages:
   - nodejs
   - yarn
   - snapd
+  - vagrant
 
 graphical_packages:
   - alacritty
@@ -59,22 +62,22 @@ graphical_packages:
   - thunderbird
   - ghostwriter
   - telegram
-  - vagrant
   - virtualbox
   - hardinfo
-  - backintime-qt4
   - libreoffice
-  - transmission-qt
 
 snap_packages:
-  - spotify
+  - plexmediaserver
 
 apt_packages:
   - insync
   - libasound2
 
 aptgui_packages:
+  - backintime-qt4
   - handbrake-gtk
+  - transmission-gtk
+  - spotify-client
 
 # Program vars
 antigen:
@@ -95,6 +98,10 @@ insync:
 tpm:
   location: "{{ user.home }}/.tmux/plugins/tpm"
   repo: "https://github.com/tmux-plugins/tpm"
+
+veeam:
+  location: "/usr/bin/veeam"
+  download_url: "https://download2.veeam.com/veeam-release-deb_1.0.7_amd64.deb"
 
 vundle:
   location: "{{ user.home }}/.vim/bundle/Vundle.vim"

@@ -44,6 +44,10 @@
   apt:
     upgrade: dist
 
+- name: Installing kernel headers
+  package:
+    name: "linux-headers-{{ ansible_kernel }}"
+
 - name: Install APT specific packages
   package: 
     name: "{{ item }}"

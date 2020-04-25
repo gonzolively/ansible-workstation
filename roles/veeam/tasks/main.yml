@@ -1,0 +1,31 @@
+---
+
+- name: Check to see if Veeam is installed
+  stat:
+    path: "{{ veeam.location }}"
+  register: veeam_exists
+
+# Ubuntu
+- name: Download Veeam repo deb
+  get_url:
+    url: "{{ veeam.download_url }}"
+    dest: "{{ downloads }}/veeam.deb"
+  when: ansible_distribution == "Ubuntu" and veeam_exists.stat.exists == False
+
+- name: Install Veeam repo deb
+  apt:
+    deb: "{{ downloads }}/veeam.deb"
+  when: ansible_distribution == "Ubuntu" and veeam_exists.stat.exists == False
+
+- name: Update APT repos (apt-get update)
+  apt:
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu" and veeam_exists.stat.exists == False
+
+- name: Install Veeam package
+  package:
+    name: veeam
+    state: latest
+
+# Fedora
+# Arch

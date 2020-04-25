@@ -1,8 +1,5 @@
 ---
 
-- name: Enable time stats on ansible output
-  shell: export ANSIBLE_LOAD_CALLBACK_PLUGINS=1
-
 - name: Detect if GUI exists
   shell: "echo $XDG_CURRENT_DESKTOP"
   register: gui

@@ -11,6 +11,7 @@
     - { role: vim }
     - { role: tmux }
     - { role: zsh }
+    - { role: veeam, become: yes }
     - { role: ssh_keys }
 #    - { role: i3wm }
     - { role: dotfiles }

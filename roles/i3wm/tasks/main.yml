@@ -1,15 +1,13 @@
 ---
 
-- name: Add Reglith repository
-  apt_repository:
-    repo: ppa:regolith-linux/release
-
-- name: Update APT repos (apt-get update)
-  apt:
-    update_cache: yes
-
+# Ubuntu
 - name: Install Regolith i3 WM if GUI exists
   package:
     name: regolith-desktop
     state: present
-  when: has_gui != ""
+  # This is mostly for testing as I want to ignore this install
+  #when: has_gui != ""
+
+# Fedora
+
+# Arch
