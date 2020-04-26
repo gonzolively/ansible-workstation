@@ -15,7 +15,7 @@ fi
 # Run platform specific commands
 if [ "$DISTRO" == "Ubuntu" ]; 
 then
-   echo "Installing Ansible...\n" &&
+   echo "\nInstalling Ansible...\n" &&
    sudo apt-add-repository -r ppa:ansible/ansible -y &&
    sudo apt-get update &&
    sudo apt-get install -y ansible &&

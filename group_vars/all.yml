@@ -29,8 +29,6 @@ apt_repos:
   - ppa:mmstick76/alacritty
   - ppa:wereturtle/ppa
   - ppa:atareao/telegram
-  - ppa:bit-team/stable
-  - ppa:stebbins/handbrake-releases
 
 dnf_repos:
   - wereturtle/stable
@@ -38,6 +36,7 @@ dnf_repos:
 # Package info
 base_packages:
   - gcc
+  - git
   - make
   - perl
   - git
@@ -75,10 +74,9 @@ snap_packages:
 apt_packages:
   - insync
   - libasound2
+  - apt-transport-https
 
 aptgui_packages:
-  - backintime-qt4
-  - handbrake-gtk
   - transmission-gtk
   - spotify-client
 
