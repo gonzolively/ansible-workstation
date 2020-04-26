@@ -15,11 +15,11 @@ fi
 # Run platform specific commands
 if [ "$DISTRO" == "Ubuntu" ]; 
 then
-   echo "\nInstalling Ansible...\n" &&
+   echo -e "\nInstalling Ansible...\n" &&
    sudo apt-add-repository -r ppa:ansible/ansible -y &&
    sudo apt-get update &&
    sudo apt-get install -y ansible &&
-   echo "\nAnsible installed successfully, now running playbook...\n" &&
+   echo -e "\nAnsible installed successfully, now running playbook...\n" &&
    $command
 elif [ "$DISTRO" == "Fedora" ]; 
 then
