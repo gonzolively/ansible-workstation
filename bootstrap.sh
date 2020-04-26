@@ -2,7 +2,7 @@
 
 
 # This script is intended to be ran after a fresh os install in order to install ansible and start the deployment process.
-command="ansible-playbook -l localhost deploy.yml --vault-password-file vault_pass.txt --check --ask-become-pass"
+command="ansible-playbook -l localhost deploy.yml --vault-password-file vault_pass.txt --ask-become-pass"
 
 # If available, use LSB to identify distribution
 if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
@@ -15,11 +15,11 @@ fi
 # Run platform specific commands
 if [ "$DISTRO" == "Ubuntu" ]; 
 then
-   echo "This is Ubuntu"
-   sudo apt-add-repository -y ppa:ansible/ansible &&
+   echo "Installing Ansible...\n" &&
+   sudo apt-add-repository -r ppa:ansible/ansible -y &&
    sudo apt-get update &&
    sudo apt-get install -y ansible &&
-   echo "Ansible installed successfully, now running deploy.yml playbook...' &&
+   echo "\nAnsible installed successfully, now running playbook...\n" &&
    $command
 elif [ "$DISTRO" == "Fedora" ]; 
 then
@@ -28,6 +28,5 @@ elif [ "$DISTRO" == "ArchLinux" ];
 then
    echo "This is Archlinux"
 else
-   echo "I'm not sure what this is"
-   exit 0
+   echo "I am not sure what this is"
 fi
