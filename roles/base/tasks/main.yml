@@ -9,6 +9,9 @@
   set_fact:
     has_gui: "{{ gui.stdout }}"
 
+- debug:
+    msg: "BASE/MAIN" - has_gui = "{{ has_gui }}"
+
 # Run distro specific package tasks before installing running base
 - include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
