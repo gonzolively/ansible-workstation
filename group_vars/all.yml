@@ -37,6 +37,9 @@ dnf_repos:
 
 # Package info
 base_packages:
+  - gcc
+  - make
+  - perl
   - git
   - lynx
   - mutt

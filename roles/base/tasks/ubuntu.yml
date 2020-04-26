@@ -11,7 +11,7 @@
   with_items:
     - "{{ apt_repos }}"
 
-- name: Add an Apt signing keys for programs
+- name: Add an apt signing key for programs
   apt_key:
     url: "{{ item }}"
     state: present

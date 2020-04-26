@@ -9,9 +9,8 @@
 
 - include_tasks: arch.yml
   when: ansible_distribution == "Archlinux"
+
 # These tasks must be performed after dotfiles are in
-
-
 - name: Install Antigen plugins
   shell: "source {{ user.home}}/.zshrc && antigen update"
   args:
