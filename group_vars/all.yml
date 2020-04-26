@@ -36,7 +36,9 @@ dnf_repos:
 # Package info
 base_packages:
   - gcc
+  - vim
   - git
+  - htop
   - make
   - perl
   - git
@@ -57,6 +59,8 @@ base_packages:
   - yarn
   - snapd
   - vagrant
+  - xclip
+  - gparted
 
 graphical_packages:
   - alacritty
