@@ -13,13 +13,10 @@
   with_items:
     - "{{ snap_packages }}"
 
-- debug:
-    msg: "BASE/PACKAGES - has_gui = {{ has_gui }}"
-
 - name: Install graphical packages if GUI exists
   package:
     name: "{{ item }}"
     state: present
   with_items:
     - "{{ graphical_packages }}"
-  when: has_gui != ""
+  when: "{{ lookup('env','XDG_CURRENT_DESKTOP') }} != ""
