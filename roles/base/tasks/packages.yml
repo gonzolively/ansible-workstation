@@ -14,7 +14,7 @@
     - "{{ snap_packages }}"
 
 - debug:
-    msg: "BASE/PACKAGES" - has_gui = "{{ has_gui }}"
+    msg: "BASE/PACKAGES - has_gui = {{ has_gui }}"
 
 - name: Install graphical packages if GUI exists
   package:
