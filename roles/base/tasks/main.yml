@@ -5,6 +5,9 @@
   register: gui
   ignore_errors: yes
 
+- debug:
+    msg: "Is there a gui var? gui = {{ gui }}"
+
 - name: Set GUI variable
   set_fact:
     has_gui: "{{ gui.stdout }}"
