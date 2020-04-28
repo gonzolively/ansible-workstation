@@ -15,6 +15,15 @@
   ignore_errors: yes
   when: gui != ""
 
+# Remove unwanted packages
+- name: Remove unwanted 'default' packages
+  become: yes
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ apt_packages_to_remove }}"
+
 - name: Remove dependencies that are no longer required
   become: yes
   apt:

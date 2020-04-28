@@ -5,9 +5,4 @@
   package:
     name: regolith-desktop
     state: present
-  # This is mostly for testing as I want to ignore this install
-  #when: has_gui != ""
-
-# Fedora
-
-# Arch
+  when: gui != ""

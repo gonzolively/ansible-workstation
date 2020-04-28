@@ -23,12 +23,12 @@ ubuntu_keyserver_keys:
 apt_keys:
   - https://dl.yarnpkg.com/debian/pubkey.gpg
   - https://download.spotify.com/debian/pubkey.gpg
+  - https://azlux.fr/repo.gpg.key
 
 apt_repos:
   - ppa:regolith-linux/release
   - ppa:mmstick76/alacritty
   - ppa:wereturtle/ppa
-  - ppa:atareao/telegram
 
 dnf_repos:
   - wereturtle/stable
@@ -60,14 +60,14 @@ base_packages:
   - snapd
   - vagrant
   - xclip
-  - gparted
+  - bashtop
 
 graphical_packages:
   - alacritty
+  - gparted
   - vlc
   - thunderbird
   - ghostwriter
-  - telegram
   - virtualbox
   - hardinfo
   - libreoffice
@@ -79,6 +79,9 @@ apt_packages:
   - insync
   - libasound2
   - apt-transport-https
+
+apt_packages_to_remove:
+  - firefox
 
 aptgui_packages:
   - transmission-gtk
