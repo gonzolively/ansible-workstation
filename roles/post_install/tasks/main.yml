@@ -24,3 +24,8 @@
 
 - name: Install Tmux plugins
   shell: "{{ tpm.location }}/scripts/install_plugins.sh"
+
+- name: Remove {{ downloads }} folder
+  shell: "rm -rf {{ downloads }}"
+
+#- name: Restart prompt will go here

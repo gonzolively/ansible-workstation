@@ -6,6 +6,9 @@
     ANSIBLE_STDOUT_CALLBACK: debug
     ANSIBLE_LOAD_CALLBACK_PLUGINS: 1
 
+  vars:
+    gui: "{{ lookup('env', 'XDG_CURRENT_DESKTOP') }}"
+
   vars_files:
     - ./group_vars/vault.yml
     - ./group_vars/all.yml
@@ -15,7 +18,7 @@
     - { role: vim }
     - { role: tmux }
     - { role: zsh }
-#    - { role: fonts }
+    - { role: fonts }
     - { role: veeam, become: yes }
     - { role: ssh_keys }
 #    - { role: i3wm }

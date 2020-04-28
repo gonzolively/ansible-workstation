@@ -1,0 +1,41 @@
+---
+- name: 'Clone the Nerdfonts repo'
+  git:
+    repo: https://github.com/ryanoasis/nerd-fonts.git
+    dest: "{{ downloads }}/nerd_fonts"
+    depth: 1
+
+- name: Check to see if NerdFonts directory exists
+  stat:
+    path: "{{ nerdfonts_install_dir }}/NerdFonts"
+  register: nerdfonts_dir
+
+- name: 'Create NerdFonts folder for {{ user.name }}'
+  file:
+    path: "{{ nerdfonts_install_dir }}/NerdFonts"
+    state: directory
+  when: nerdfonts_dir.stat.exists == False
+
+- name: 'Check if there are any NerdFonts already installed'
+  stat:
+    path: "{{ nerdfonts_install_dir }}/NerdFonts/{{ item.fontname }}"
+  with_items: "{{ nerdfonts_fonts }}"
+  register: nerdfonts_stat
+
+- name: 'Combine the results into dictionary with following structure: {<FontName> : <stat.exists>}'
+  set_fact:
+    # FLATTENING THE RESULTS AND COMBINING THEM INTO DICTIONARY WITH SPECIFIED KEY:VALUE STRUCTURE:
+    nerdfonts_exists: "{{ nerdfonts_exists|default({}) | combine( {item.item.fontname: item.stat.exists} ) }}"
+  with_items: "{{ nerdfonts_stat.results }}"
+
+- name: 'Copy fonts to {{ nerdfonts_install_dir }}/NerdFonts'
+  command: "cp -r {{downloads}}/nerd_fonts/patched-fonts/{{ item.key }} {{ nerdfonts_install_dir }}/NerdFonts/"
+  with_dict: "{{ nerdfonts_exists }}"
+  become: yes
+  become_user: "{{ user.name }}"
+  when:
+  - item.value == false
+
+- name: 'Install specified NerdFonts'
+  command: "fc-cache -f {{ nerdfonts_install_dir }}"
+  when: false in nerdfonts_exists.values()

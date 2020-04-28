@@ -6,15 +6,14 @@
   get_url:
     url: "{{ chrome.deb_url }}"
     dest: "{{ downloads }}/{{ chrome.deb_url | basename }}"
-  when: has_gui != ""
-
+  when: gui != ""
 
 - name: Install Google-Chrome
   command: "dpkg -i {{ downloads }}/{{ chrome.deb_url | basename }}"
   become: yes
   # Mostly for testing purposes as there is no DE istalled
   ignore_errors: yes
-  when: has_gui != ""
+  when: gui != ""
 
 - name: Remove dependencies that are no longer required
   become: yes
