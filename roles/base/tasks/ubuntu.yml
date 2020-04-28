@@ -56,9 +56,9 @@
     - "{{ apt_packages }}"
 
 - name: Install APT specific GUI packages if GUI exists
-  when: "{{ lookup('env','XDG_CURRENT_DESKTOP') }} != ""
   package:
     name: "{{ item }}"
     state: latest
   with_items:
     - "{{ aptgui_packages }}"
+  when: gui != ""

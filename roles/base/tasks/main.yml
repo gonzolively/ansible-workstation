@@ -1,5 +1,6 @@
 ---
 # Run distro specific package tasks before installing running base
+
 - include_tasks: ubuntu.yml
   when: ansible_distribution == "Ubuntu"
 
