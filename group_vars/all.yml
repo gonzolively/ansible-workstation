@@ -63,7 +63,6 @@ base_packages:
   - bashtop
 
 graphical_packages:
-  - alacritty
   - gparted
   - vlc
   - thunderbird
@@ -71,6 +70,7 @@ graphical_packages:
   - virtualbox
   - hardinfo
   - libreoffice
+  #- alacritty
 
 snap_packages:
   - plexmediaserver

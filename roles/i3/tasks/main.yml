@@ -3,6 +3,9 @@
 # Ubuntu
 - name: Install Regolith i3 WM if GUI exists
   package:
-    name: regolith-desktop
+    name: "{{ item }}"
     state: present
   when: gui != ""
+  with_items:
+    - regolith-desktop
+    - i3xrocks-time

@@ -21,6 +21,6 @@
     - { role: fonts }
     - { role: veeam, become: yes }
     - { role: ssh_keys }
-    - { role: i3 }
+    - { role: i3, become: yes }
     - { role: dotfiles }
     - { role: post_install }
