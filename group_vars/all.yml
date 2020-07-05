@@ -29,6 +29,7 @@ apt_repos:
   - ppa:regolith-linux/release
   - ppa:mmstick76/alacritty
   - ppa:wereturtle/ppa
+  - ppa:stebbins/handbrake-releases
 
 dnf_repos:
   - wereturtle/stable
@@ -61,6 +62,7 @@ base_packages:
   - vagrant
   - xclip
   - bashtop
+  - whois
 
 graphical_packages:
   - gparted
@@ -73,11 +75,12 @@ graphical_packages:
   #- alacritty
 
 snap_packages:
-  - plexmediaserver
+  #  - plexmediaserver
 
 apt_packages:
   - insync
   - libasound2
+  - build-essential
   - apt-transport-https
 
 apt_packages_to_remove:
@@ -86,6 +89,7 @@ apt_packages_to_remove:
 aptgui_packages:
   - transmission-gtk
   - spotify-client
+  - handbrake-gtk
 
 # Program vars
 antigen:

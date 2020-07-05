@@ -1,11 +1,43 @@
 ---
 
+- name: Install Gnome DE (testing only right now...)
+
 # Ubuntu
-- name: Install Regolith i3 WM if GUI exists
+- name: Install i3 WM if GUI exists
   package:
     name: "{{ item }}"
     state: present
   when: gui != ""
   with_items:
-    - regolith-desktop
-    - i3xrocks-time
+    - gnome-session-flashback
+    - gnome-flashback
+    - i3-wm
+    - rofi
+    - compton
+    #- regolith-desktop
+    #- i3xrocks-time
+
+- name: Install i3-gnome-flashback integration
+  # (https://github.com/deuill/i3-gnome-flashback)
+
+
+
+
+
+
+
+
+
+# Add/configure these in the future
+# - gnome-session-flashback
+# - gnome-flashback
+# - i3-wm
+# - rofi
+# - compton
+# - i3-gnome-flashback (https://github.com/deuill/i3-gnome-flashback)
+
+# - gdm3 (login screen...may not need)
+# - i3-gaps (will have to build from source until i3 provides native support)
+
+
+# Consider using LXQT/XFCE/No DE in the future
