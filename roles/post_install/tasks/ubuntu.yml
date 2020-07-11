@@ -28,3 +28,13 @@
   become: yes
   apt:
     autoremove: yes
+
+- name: Copy notes.txt to Desktop
+  copy:
+    src: "{{ item }}"
+    dest: "{{ user.home }}/Desktop/{{ item | basename }}"
+    mode: 0600
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+  with_file:
+    - "files/notes.txt"
