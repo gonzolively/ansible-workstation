@@ -72,7 +72,7 @@ graphical_packages:
   - virtualbox
   - hardinfo
   - libreoffice
-  #- alacritty
+  - alacritty
 
 snap_packages:
   #  - plexmediaserver
@@ -85,6 +85,12 @@ apt_packages:
 
 apt_packages_to_remove:
   - firefox
+  - qtpass
+  - 2048-qt
+  - quassel
+  - trojita
+  - noblenote
+  - skanlite
 
 aptgui_packages:
   - transmission-gtk
@@ -113,7 +119,7 @@ tpm:
 
 veeam:
   location: "/usr/bin/veeam"
-  download_url: "https://download2.veeam.com/veeam-release-deb_1.0.7_amd64.deb"
+  download_url: "http://repository.veeam.com/.private/deb/veeam/veeam_4.0.0.1961_amd64.deb"
 
 vundle:
   location: "{{ user.home }}/.vim/bundle/Vundle.vim"
