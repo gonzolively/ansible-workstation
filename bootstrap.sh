@@ -2,7 +2,7 @@
 
 
 # This script is intended to be ran after a fresh os install in order to install ansible and start the deployment process.
-command="ansible-playbook -l localhost deploy.yml --vault-password-file vault_pass.txt --ask-become-pass"
+command="ansible-playbook -l localhost deploy.yml --vault-password-file .vault_pass.txt --ask-become-pass"
 
 # If available, use LSB to identify distribution
 if [ -f /etc/lsb-release -o -d /etc/lsb-release.d ]; then
