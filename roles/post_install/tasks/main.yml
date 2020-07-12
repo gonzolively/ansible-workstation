@@ -32,10 +32,8 @@
 
 - name: Copy notes.txt to Desktop
   copy:
-    src: "{{ item }}"
-    dest: "{{ user.home }}/Desktop/{{ item | basename }}"
+    src: "files/notes.txt"
+    dest: "{{ user.home }}/Desktop/notes.txt"
     mode: 0600
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
-  with_file:
-    - "{{ role_path }}/files/notes.txt"

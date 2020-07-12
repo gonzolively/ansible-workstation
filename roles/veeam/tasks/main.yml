@@ -5,27 +5,15 @@
     path: "{{ veeam.location }}"
   register: veeam_exists
 
-# Ubuntu
-- name: Download Veeam repo deb
-  get_url:
-    url: "{{ veeam.download_url }}"
-    dest: "{{ downloads }}/veeam.deb"
-  when: ansible_distribution == "Ubuntu" and veeam_exists.stat.exists == False
-
-- name: Install Veeam repo deb
+- name: Install Veeamsnap
   apt:
-    deb: "{{ downloads }}/veeam.deb"
+    deb: "{{ veeamsnap.download_url }}"
   when: ansible_distribution == "Ubuntu" and veeam_exists.stat.exists == False
 
-- name: Update APT repos (apt-get update)
+- name: Install Veeam
   apt:
-    update_cache: yes
+    deb: "{{ veeam.download_url }}"
   when: ansible_distribution == "Ubuntu" and veeam_exists.stat.exists == False
-
-- name: Install Veeam package
-  package:
-    name: veeam
-    state: latest
 
 # Fedora
 # Arch

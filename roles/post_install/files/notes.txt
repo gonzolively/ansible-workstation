@@ -1,5 +1,8 @@
 # Notes
 
+## World clock format
+'<b> 'MMM dd ' | 'HH:mm'</b>
+
 ## Ubuntu Startup entries
 Connect to JBL Flip 5
 bluetoothctl connect B8:F6:53:19:CA:67

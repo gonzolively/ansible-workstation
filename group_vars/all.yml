@@ -91,6 +91,9 @@ apt_packages_to_remove:
   - trojita
   - noblenote
   - skanlite
+  - k3b
+  - qps
+  - plasma-discover
 
 aptgui_packages:
   - transmission-gtk
@@ -117,9 +120,13 @@ tpm:
   location: "{{ user.home }}/.tmux/plugins/tpm"
   repo: "https://github.com/tmux-plugins/tpm"
 
+# Find latest veeam packages here: http://repository.veeam.com/.private/
 veeam:
   location: "/usr/bin/veeam"
   download_url: "http://repository.veeam.com/.private/deb/veeam/veeam_4.0.0.1961_amd64.deb"
+
+veeamsnap:
+  download_url: "http://repository.veeam.com/.private/deb/veeamsnap/veeamsnap_4.0.0.1961_all.deb"
 
 vundle:
   location: "{{ user.home }}/.vim/bundle/Vundle.vim"
