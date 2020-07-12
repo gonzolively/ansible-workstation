@@ -66,8 +66,9 @@
 
 - name: Install pip dependencies
   pip:
-    name: 
-    - github3.py
+    name: "{{ item }}"
+  with_items:
+    - "{{ pips }}"
 
 # Install user programs and packages
 - include_tasks: packages.yml

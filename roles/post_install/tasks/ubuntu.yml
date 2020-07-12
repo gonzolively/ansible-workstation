@@ -29,3 +29,32 @@
   become: yes
   apt:
     autoremove: yes
+
+# Find and set fastest mirror
+- name: Find fastest mirror
+  shell: apt-select
+
+- name: Check to see if 'sources.list' was generated
+  stat:
+    path: "{{ lookup('env', 'PWD') }}/sources.list"
+  register: sources
+
+- name: Backup sources.list
+  copy:
+    src: "/etc/apt/sources.list"
+    dest: "/etc/apt/sources.list.backup"
+    mode: 0600
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+  become: yes
+  when: sources.stat.exists == True
+
+- name: Copy new sources.list to /etc/apt
+  copy:
+    src: "{{ lookup('env', 'PWD') }}/sources.list"
+    dest: "/etc/apt/sources.list"
+    mode: 0600
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+  become: yes
+  when: sources.stat.exists == True

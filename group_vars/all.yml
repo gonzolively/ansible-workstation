@@ -64,6 +64,10 @@ base_packages:
   - bashtop
   - whois
 
+pips:
+  - apt-select
+  - github3.py
+
 graphical_packages:
   - gparted
   - vlc

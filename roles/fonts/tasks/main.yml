@@ -1,4 +1,10 @@
 ---
+- name: 'Clone the Nerdfonts repo'
+  git:
+    repo: https://github.com/ryanoasis/nerd-fonts.git
+    dest: "{{ downloads }}/nerd_fonts"
+    depth: 1
+
 - name: Check to see if NerdFonts directory exists
   stat:
     path: "{{ nerdfonts_install_dir }}/NerdFonts"
@@ -21,14 +27,6 @@
     # FLATTENING THE RESULTS AND COMBINING THEM INTO DICTIONARY WITH SPECIFIED KEY:VALUE STRUCTURE:
     nerdfonts_exists: "{{ nerdfonts_exists|default({}) | combine( {item.item.fontname: item.stat.exists} ) }}"
   with_items: "{{ nerdfonts_stat.results }}"
-  when: nerdfonts_stat.exists == False
-
-- name: 'Clone the Nerdfonts repo'
-  git:
-    repo: https://github.com/ryanoasis/nerd-fonts.git
-    dest: "{{ downloads }}/nerd_fonts"
-    depth: 1
-  when: nerdfonts_stat.exists == False
 
 - name: 'Copy fonts to {{ nerdfonts_install_dir }}/NerdFonts'
   command: "cp -r {{downloads}}/nerd_fonts/patched-fonts/{{ item.key }} {{ nerdfonts_install_dir }}/NerdFonts/"
