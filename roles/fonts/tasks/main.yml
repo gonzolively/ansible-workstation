@@ -1,9 +1,4 @@
 ---
-- name: 'Clone the Nerdfonts repo'
-  git:
-    repo: https://github.com/ryanoasis/nerd-fonts.git
-    dest: "{{ downloads }}/nerd_fonts"
-    depth: 1
 
 - name: Check to see if NerdFonts directory exists
   stat:
@@ -14,6 +9,13 @@
   file:
     path: "{{ nerdfonts_install_dir }}/NerdFonts"
     state: directory
+  when: nerdfonts_dir.stat.exists == False
+
+- name: 'Clone the Nerdfonts repo'
+  git:
+    repo: https://github.com/ryanoasis/nerd-fonts.git
+    dest: "{{ downloads }}/nerd_fonts"
+    depth: 1
   when: nerdfonts_dir.stat.exists == False
 
 - name: 'Check if there are any NerdFonts already installed'

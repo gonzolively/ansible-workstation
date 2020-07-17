@@ -66,9 +66,7 @@
 
 - name: Install pip dependencies
   pip:
-    name: "{{ item }}"
-  with_items:
-    - "{{ pips }}"
+    name: "{{ pips }}"
 
 # Install user programs and packages
 - include_tasks: packages.yml
