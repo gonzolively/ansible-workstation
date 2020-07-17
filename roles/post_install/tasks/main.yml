@@ -38,6 +38,9 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
-- name: Rebooting machine in 60 seconds...
-  command: sleep 60 && reboot
+- pause:
+    seconds: 60
+    prompt: "Rebooting machine in 60 seconds..."
+
+- command: reboot
   become: yes
