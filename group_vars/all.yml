@@ -91,6 +91,7 @@ apt_packages_to_remove:
   - firefox
   - qtpass
   - 2048-qt
+  - qlipper
   - quassel
   - trojita
   - noblenote

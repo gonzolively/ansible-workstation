@@ -37,6 +37,7 @@
     mode: 0600
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
+  when: gui != ""
 
 - pause:
     seconds: 60
